@@ -1,16 +1,35 @@
+import processing.serial.*;
+import cc.arduino.*;
+Arduino arduino;
+int r = 0;
+int g = 0;
+int b = 0;
 
-void setup(){
-  //some of your code here
+
+public void setup() {
+  size(500, 500);
+  arduino = new Arduino(this, Arduino.list()[0], 57600); //change the [0] to a [1] or [2] etc. if your program doesn't work
+  
 }
+
 void draw(){
-  //more of your code here
-}
+ int y = arduino.analogRead(5)/2;
 
-size(600,600);
+
+
 background(#E8E5E5);
 noStroke();
 
 //basic face
+ 
+  if (y<100) {
+ fill (173, 216, 230); //blue
+  } else if (y<110) {
+ fill (210,180,140); //brown
+  } else if (y>110) {
+ fill (255,182,193); //pink
+  }
+      
   ellipse(300, 205, 220, 200);
   
 //side of face
@@ -133,12 +152,20 @@ noStroke();
   curve(310, 102, 310, 102, 285, 95, 275, 100);
   curve(305, 102, 305, 102, 270, 100, 260, 80);
   
+  if (y<100) {
+ fill (96, 130, 182); //dark blue
+  } else if (y<110) {
+ fill (138, 154, 91); //gray
+  } else if (y>110) {
+ fill (128, 0, 128); //purple
+  }
+  
   //left ear
   noStroke();
   pushMatrix();
   translate(180, 160);
   rotate(radians(40));
-  fill(110, 38, 14);
+  //fill(110, 38, 14);
   ellipse(0, 0, 40, 120);
   popMatrix();
   
@@ -149,8 +176,10 @@ noStroke();
   pushMatrix();
   translate(420, 160);
   rotate(radians(-40));
-  fill(110, 38, 14);
+  //fill(110, 38, 14);
   ellipse(0, 0, 40, 120);
   popMatrix();
   
   ellipse(430, 200, 60, 150);
+ 
+}
