@@ -1,0 +1,106 @@
+
+
+import processing.serial.*;
+import cc.arduino.*;
+Arduino arduino;
+int top = 0;
+int bottom = 0;
+int right = 0;
+int left = 0;
+int x = 160;
+int y = 160;
+int resetwhite = 0;
+int colordot = 0;
+
+public void setup() {
+  size(500, 500);
+  arduino = new Arduino(this, Arduino.list()[2], 57600); //change the [0] to a [1] or [2] etc. if your program doesn't work
+  background(250, 250, 250);
+}
+
+public void draw() {
+  noStroke();
+
+  //top = arduino.analogRead(9); //top
+  bottom = arduino.analogRead(6); //bottom
+  right = arduino.analogRead(9); //bottom
+  left = arduino.analogRead(11); //bottom
+  resetwhite = arduino.analogRead(1); //reset button
+  top = arduino.analogRead(5); //reset color 
+
+  
+  if(right>10) {
+    x=x+3;
+  }
+  
+  
+  if (left>30) {
+    x=x-3;
+  }
+  
+
+  
+  if(bottom>30) {
+    y=y+3;
+  }
+  
+  if(resetwhite>10) {
+    background(250,250,250);
+    x=200;
+    y=200;
+  }
+  
+ 
+   if (top<10) {
+     y=y-3;
+   }
+   
+   fill(#C4A484); //lightbrown
+  ellipse(x, y, 20, 20);
+
+ int locaX = mouseX;
+ int locaY = mouseY;
+  text(locaX, mouseX, mouseY);
+  text(", ", mouseX+21, mouseY);
+  text(locaY, mouseX+30, mouseY);
+   text("1", 160, 160);
+  text("2", 180, 160);
+  text("3", 180, 180);
+  text("4", 160, 180);
+  text("5", 100, 160);
+  text("6", 110, 140);
+  text("7", 124, 116);
+  text("8", 166, 70);
+  text("9", 231, 54);
+  text("10", 305, 70);
+  text("11", 350, 116);
+  text("12", 280, 160);
+  text("13", 300, 160);
+  text("14", 300, 180);
+  text("15", 280, 180);
+  text("16", 360, 140);
+  text("17", 370, 160);
+  text("18", 379, 118);
+  text("19", 400, 103);
+  text("20", 420, 118);
+  text("21", 437, 190);
+  text("22", 410, 300);
+  text("23", 370, 212);
+  text("25", 350, 294);
+  text("24", 368, 250);
+  text("26", 313, 315);
+  text("27", 235, 336);
+  text("28", 150, 315);
+  text("29", 110, 294);
+  text("30", 100, 285);
+  text("31", 88, 212);
+  text("32", 80, 118);
+  text("33", 60, 103);
+  text("34", 40, 118);
+  text("35", 23, 190);
+  text("36", 50, 300);
+  text("37", 92, 185);
+  for(int i = 0; i < 16; i++)
+    System.out.print(i+" "+arduino.analogRead(i) + "\t");
+  System.out.println();
+}
